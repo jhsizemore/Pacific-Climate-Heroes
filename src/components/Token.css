@@ -1,0 +1,6 @@
+.token {
+  width: 64px;
+  height: 64px;
+  cursor: pointer;
+  user-select: none;
+}
