@@ -117,7 +117,7 @@ To contribute:
 
 ## License
 
-Distributed under the **MIT License**. See `LICENSE` for full terms.
+Distributed under the [MIT License](LICENSE).
 
 ---
 
