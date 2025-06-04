@@ -20,7 +20,7 @@
 - [ ] 1.0 Create interactive game board
   - [x] 1.1 Build `GameBoard` component with background image
   - [x] 1.2 Implement `HexGrid` overlay within the board
-  - [ ] 1.3 Render `GameBoard` in `App`
+  - [x] 1.3 Render `GameBoard` in `App`
 - [ ] 2.0 Implement draggable tokens
   - [x] 2.1 Build `Token` component displaying hero icons
   - [ ] 2.2 Enable drag-and-drop behaviour using React state
