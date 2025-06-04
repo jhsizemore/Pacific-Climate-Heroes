@@ -1,16 +1,51 @@
 import React from 'react';
+import {
+  BOARD_WIDTH,
+  BOARD_HEIGHT,
+  HEX_RADIUS,
+  hexToPixel,
+  getHexPoints,
+} from '../utils/hex';
 import './HexGrid.css';
 
 const HexGrid: React.FC = () => {
+  const hexes: JSX.Element[] = [];
+  const qCount = Math.ceil(BOARD_WIDTH / (HEX_RADIUS * 1.5));
+  const rCount = Math.ceil(BOARD_HEIGHT / (HEX_RADIUS * Math.sqrt(3)));
+
+  for (let q = -1; q <= qCount; q++) {
+    for (let r = -1; r <= rCount; r++) {
+      const { x, y } = hexToPixel(q, r);
+      if (
+        x < -HEX_RADIUS ||
+        y < -HEX_RADIUS ||
+        x > BOARD_WIDTH + HEX_RADIUS ||
+        y > BOARD_HEIGHT + HEX_RADIUS
+      ) {
+        continue;
+      }
+      hexes.push(
+        <polygon
+          key={`${q}-${r}`}
+          points={getHexPoints(x, y)}
+          fill="none"
+          stroke="rgba(255,255,255,0.3)"
+          strokeWidth={4}
+          strokeLinejoin="round"
+        />
+      );
+    }
+  }
+
   return (
-    <svg className="hex-grid" data-testid="hex-grid" viewBox="0 0 800 600" width="800" height="600">
-      <defs>
-        <pattern id="hexPattern" width="60" height="52" patternUnits="userSpaceOnUse" patternTransform="translate(30,26)"
-        >
-          <polygon points="30,0 60,15 60,45 30,60 0,45 0,15" fill="none" stroke="rgba(0,0,0,0.2)" strokeWidth="1" />
-        </pattern>
-      </defs>
-      <rect width="800" height="600" fill="url(#hexPattern)" />
+    <svg
+      className="hex-grid"
+      data-testid="hex-grid"
+      width={BOARD_WIDTH}
+      height={BOARD_HEIGHT}
+      viewBox={`0 0 ${BOARD_WIDTH} ${BOARD_HEIGHT}`}
+    >
+      {hexes}
     </svg>
   );
 };

@@ -13,7 +13,7 @@ test('renders game board with background image', () => {
 test('snaps token to nearest hex on drop', () => {
   const { getByTestId } = render(<GameBoard />);
   const board = getByTestId('game-board');
-  const token = getByTestId('token');
+  const token = getByTestId('token-1');
 
   jest.spyOn(board, 'getBoundingClientRect').mockReturnValue({
     left: 0,
@@ -33,14 +33,14 @@ test('snaps token to nearest hex on drop', () => {
 
   const left = parseInt(token.style.left, 10);
   const top = parseInt(token.style.top, 10);
-  expect(left).toBe(118);
-  expect(top).toBe(98);
+  expect(left).toBe(168);
+  expect(top).toBe(117);
 });
 
 test('detects when token moves out of bounds', () => {
   const { getByTestId } = render(<GameBoard />);
   const board = getByTestId('game-board');
-  const token = getByTestId('token');
+  const token = getByTestId('token-1');
 
   jest.spyOn(board, 'getBoundingClientRect').mockReturnValue({
     left: 0,
@@ -59,3 +59,58 @@ test('detects when token moves out of bounds', () => {
 
   expect(token.getAttribute('data-out-of-bounds')).toBe('true');
 });
+
+test('clamps token within board boundaries', () => {
+  const { getByTestId } = render(<GameBoard />);
+  const board = getByTestId('game-board');
+  const token = getByTestId('token-1');
+
+  jest.spyOn(board, 'getBoundingClientRect').mockReturnValue({
+    left: 0,
+    top: 0,
+    right: 200,
+    bottom: 200,
+    width: 200,
+    height: 200,
+    x: 0,
+    y: 0,
+    toJSON: () => {}
+  });
+
+  fireEvent.mouseDown(token);
+  fireEvent.mouseMove(board, { clientX: 300, clientY: 300 });
+
+  const left = parseInt(token.style.left, 10);
+  const top = parseInt(token.style.top, 10);
+  expect(left).toBe(136); // 200 - 64
+  expect(top).toBe(136);
+});
+
+test('tokens drag independently without conflict', () => {
+  const { getByTestId } = render(<GameBoard />);
+  const board = getByTestId('game-board');
+  const token1 = getByTestId('token-1');
+  const token2 = getByTestId('token-2');
+
+  jest.spyOn(board, 'getBoundingClientRect').mockReturnValue({
+    left: 0,
+    top: 0,
+    right: 800,
+    bottom: 600,
+    width: 800,
+    height: 600,
+    x: 0,
+    y: 0,
+    toJSON: () => {}
+  });
+
+  fireEvent.mouseDown(token1);
+  fireEvent.mouseMove(board, { clientX: 180, clientY: 160 });
+  fireEvent.mouseUp(board);
+
+  const token1Left = parseInt(token1.style.left, 10);
+  const token2Left = parseInt(token2.style.left, 10);
+  expect(token2Left).toBe(200);
+  expect(token1Left).not.toBe(100);
+});
+

@@ -5,9 +5,9 @@ import heroIcon from '../../assets/img/hero-icon.svg';
 
 test('renders token image', () => {
   const { getByTestId } = render(
-    <Token icon={heroIcon} alt="Hero" x={0} y={0} />
+    <Token id={1} icon={heroIcon} alt="Hero" x={0} y={0} />
   );
-  const token = getByTestId('token') as HTMLImageElement;
+  const token = getByTestId('token-1') as HTMLImageElement;
   expect(token).toBeInTheDocument();
   expect(token.alt).toBe('Hero');
 });
