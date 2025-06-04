@@ -25,12 +25,16 @@
   - [x] 2.1 Build `Token` component displaying hero icons
   - [x] 2.2 Enable drag-and-drop behaviour using React state
   - [x] 2.3 Snap tokens to nearest hex on drop
-- [ ] 3.0 Constrain token movement to board bounds
+- [x] 3.0 Constrain token movement to board bounds
   - [x] 3.1 Detect board boundaries when tokens are moved
-  - [ ] 3.2 Prevent tokens from leaving the grid area
-- [ ] 4.0 Support multiple independent tokens
-  - [ ] 4.1 Manage positions of several tokens in state
-  - [ ] 4.2 Ensure tokens can be dragged separately without conflict
+  - [x] 3.2 Prevent tokens from leaving the grid area
+- [x] 4.0 Support multiple independent tokens
+  - [x] 4.1 Manage positions of several tokens in state
+  - [x] 4.2 Ensure tokens can be dragged separately without conflict
 - [ ] 5.0 Verify board loads correctly across browsers
   - [ ] 5.1 Add unit tests for drag-and-drop and snapping logic
   - [ ] 5.2 Test board rendering in modern browsers
+- [x] 6.0 Align board with new map image
+  - [x] 6.1 Set board dimensions to 1120x768
+  - [x] 6.2 Scale hex grid pattern from board bounds
+  - [x] 6.3 Use scaled values for snapping logic

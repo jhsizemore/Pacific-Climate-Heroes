@@ -2,6 +2,7 @@ import React from 'react';
 import './Token.css';
 
 export interface TokenProps {
+  id: number;
   icon: string;
   alt?: string;
   x: number;
@@ -11,6 +12,7 @@ export interface TokenProps {
 }
 
 const Token: React.FC<TokenProps> = ({
+  id,
   icon,
   alt = 'token',
   x,
@@ -23,7 +25,7 @@ const Token: React.FC<TokenProps> = ({
       src={icon}
       alt={alt}
       className={`token${outOfBounds ? ' out-of-bounds' : ''}`}
-      data-testid="token"
+      data-testid={`token-${id}`}
       data-out-of-bounds={outOfBounds}
       style={{ left: x, top: y }}
       onMouseDown={onMouseDown}
