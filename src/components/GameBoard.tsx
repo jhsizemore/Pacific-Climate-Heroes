@@ -1,79 +1,36 @@
 import React, { useRef, useState } from 'react';
-import boardImage from '../../assets/img/climate-hero-board.png';
-import heroIcon from '../../assets/img/hero-icon.svg';
-import HexGrid, { HexGridProps } from './HexGrid';
-import Token from './Token';
+import boardImage from '../../assets/img/board.png';
+
 import './GameBoard.css';
 
+interface TokenState {
+  id: number;
+  x: number;
+  y: number;
+  outOfBounds: boolean;
+}
+
 const GameBoard: React.FC = () => {
-  const [tokenPos, setTokenPos] = useState({ x: 100, y: 100 });
-  const [dragging, setDragging] = useState(false);
-  const [outOfBounds, setOutOfBounds] = useState(false);
+  const [tokens, setTokens] = useState<TokenState[]>([
+    { id: 1, x: 100, y: 100, outOfBounds: false },
+    { id: 2, x: 200, y: 100, outOfBounds: false }
+  ]);
+  const [draggingId, setDraggingId] = useState<number | null>(null);
   const boardRef = useRef<HTMLDivElement>(null);
-
-  const BASE_GRID: HexGridProps = {
-    width: 800,
-    height: 600,
-    hexWidth: 60,
-    hexHeight: 52,
-    offsetX: 30,
-    offsetY: 26
-  };
-
-  const getGridConfig = (): HexGridProps => {
-    if (!boardRef.current) return BASE_GRID;
-    const rect = boardRef.current.getBoundingClientRect();
-    const scaleX = rect.width / BASE_GRID.width;
-    const scaleY = rect.height / BASE_GRID.height;
-    return {
-      width: rect.width,
-      height: rect.height,
-      hexWidth: BASE_GRID.hexWidth * scaleX,
-      hexHeight: BASE_GRID.hexHeight * scaleY,
-      offsetX: BASE_GRID.offsetX * scaleX,
-      offsetY: BASE_GRID.offsetY * scaleY
-    };
-  };
-
-  const handleMouseDown = (e: React.MouseEvent) => {
-    setDragging(true);
-    e.preventDefault();
-  };
-
-  const handleMouseMove = (e: React.MouseEvent) => {
-    if (!dragging || !boardRef.current) return;
-    const rect = boardRef.current.getBoundingClientRect();
-    const x = e.clientX - rect.left - 32;
-    const y = e.clientY - rect.top - 32;
-    setTokenPos({ x, y });
-    setOutOfBounds(isOutsideBoard(x, y));
-  };
-
-  const isOutsideBoard = (x: number, y: number) => {
-    if (!boardRef.current) return false;
-    const rect = boardRef.current.getBoundingClientRect();
-    const size = 64;
-    return (
-      x < 0 ||
-      y < 0 ||
-      x + size > rect.width ||
-      y + size > rect.height
-    );
-  };
-
-  const snapToHex = (x: number, y: number) => {
-    const { hexWidth, hexHeight, offsetX, offsetY } = getGridConfig();
-
-    const centerX = x + 32;
-    const centerY = y + 32;
-    const gridX = Math.round((centerX - offsetX) / hexWidth) * hexWidth + offsetX;
-    const gridY = Math.round((centerY - offsetY) / hexHeight) * hexHeight + offsetY;
-    return { x: gridX - 32, y: gridY - 32 };
-  };
-
   const handleMouseUp = () => {
-    setDragging(false);
-    setTokenPos(pos => snapToHex(pos.x, pos.y));
+    if (draggingId === null) return;
+    setTokens(toks =>
+      toks.map(t => {
+        if (t.id !== draggingId) return t;
+        const snapped = snapToHex(t.x, t.y);
+        if (!boardRef.current) return { ...t, ...snapped, outOfBounds: false };
+        const rect = boardRef.current.getBoundingClientRect();
+        const x = clamp(snapped.x, 0, rect.width - TOKEN_SIZE);
+        const y = clamp(snapped.y, 0, rect.height - TOKEN_SIZE);
+        return { ...t, x, y, outOfBounds: false };
+      })
+    );
+    setDraggingId(null);
   };
 
   return (
@@ -81,19 +38,16 @@ const GameBoard: React.FC = () => {
       ref={boardRef}
       className="game-board"
       data-testid="game-board"
-      style={{ backgroundImage: `url(${boardImage})` }}
+      style={{
+        backgroundImage: `url(${boardImage})`,
+        width: BOARD_WIDTH,
+        height: BOARD_HEIGHT
+      }}
       onMouseMove={handleMouseMove}
       onMouseUp={handleMouseUp}
       onMouseLeave={handleMouseUp}
     >
-      <HexGrid {...getGridConfig()} />
-      <Token
-        icon={heroIcon}
-        x={tokenPos.x}
-        y={tokenPos.y}
-        outOfBounds={outOfBounds}
-        onMouseDown={handleMouseDown}
-      />
+
     </div>
   );
 };

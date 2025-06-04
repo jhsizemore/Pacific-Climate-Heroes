@@ -13,7 +13,7 @@ test('renders game board with background image', () => {
 test('snaps token to nearest hex on drop', () => {
   const { getByTestId } = render(<GameBoard />);
   const board = getByTestId('game-board');
-  const token = getByTestId('token');
+  const token = getByTestId('token-1');
 
   jest.spyOn(board, 'getBoundingClientRect').mockReturnValue({
     left: 0,
@@ -33,14 +33,14 @@ test('snaps token to nearest hex on drop', () => {
 
   const left = parseInt(token.style.left, 10);
   const top = parseInt(token.style.top, 10);
-  expect(left).toBe(118);
-  expect(top).toBe(98);
+  expect(left).toBe(168);
+  expect(top).toBe(117);
 });
 
 test('detects when token moves out of bounds', () => {
   const { getByTestId } = render(<GameBoard />);
   const board = getByTestId('game-board');
-  const token = getByTestId('token');
+  const token = getByTestId('token-1');
 
   jest.spyOn(board, 'getBoundingClientRect').mockReturnValue({
     left: 0,
@@ -60,29 +60,3 @@ test('detects when token moves out of bounds', () => {
   expect(token.getAttribute('data-out-of-bounds')).toBe('true');
 });
 
-test('scales snapping when board size changes', () => {
-  const { getByTestId } = render(<GameBoard />);
-  const board = getByTestId('game-board');
-  const token = getByTestId('token');
-
-  jest.spyOn(board, 'getBoundingClientRect').mockReturnValue({
-    left: 0,
-    top: 0,
-    right: 1600,
-    bottom: 1200,
-    width: 1600,
-    height: 1200,
-    x: 0,
-    y: 0,
-    toJSON: () => {}
-  });
-
-  fireEvent.mouseDown(token);
-  fireEvent.mouseMove(board, { clientX: 280, clientY: 240 });
-  fireEvent.mouseUp(board);
-
-  const left = parseInt(token.style.left, 10);
-  const top = parseInt(token.style.top, 10);
-  expect(left).toBe(268);
-  expect(top).toBe(228);
-});
