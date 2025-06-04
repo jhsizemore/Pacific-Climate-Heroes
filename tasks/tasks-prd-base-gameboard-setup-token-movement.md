@@ -1,6 +1,7 @@
 ## Relevant Files
 
 - `src/components/GameBoard.tsx` - Renders the map background with a hex grid overlay.
+- `src/components/GameBoard.css` - Styling for the GameBoard background image.
 - `src/components/HexGrid.tsx` - Logic for drawing and managing the hex grid.
 - `src/components/Token.tsx` - Draggable token component snapped to grid centers.
 - `src/components/GameBoard.test.tsx` - Unit tests for the GameBoard component.
@@ -14,7 +15,7 @@
 ## Tasks
 
 - [ ] 1.0 Create interactive game board
-  - [ ] 1.1 Build `GameBoard` component with background image
+  - [x] 1.1 Build `GameBoard` component with background image
   - [ ] 1.2 Implement `HexGrid` overlay within the board
   - [ ] 1.3 Render `GameBoard` in `App`
 - [ ] 2.0 Implement draggable tokens
