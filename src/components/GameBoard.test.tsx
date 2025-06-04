@@ -7,4 +7,5 @@ test('renders game board with background image', () => {
   const board = getByTestId('game-board');
   expect(board).toBeInTheDocument();
   expect(board.style.backgroundImage).not.toBe('');
+  expect(getByTestId('hex-grid')).toBeInTheDocument();
 });
