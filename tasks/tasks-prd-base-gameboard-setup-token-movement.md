@@ -17,16 +17,16 @@
 
 ## Tasks
 
-- [ ] 1.0 Create interactive game board
+- [x] 1.0 Create interactive game board
   - [x] 1.1 Build `GameBoard` component with background image
   - [x] 1.2 Implement `HexGrid` overlay within the board
   - [x] 1.3 Render `GameBoard` in `App`
-- [ ] 2.0 Implement draggable tokens
+- [x] 2.0 Implement draggable tokens
   - [x] 2.1 Build `Token` component displaying hero icons
   - [x] 2.2 Enable drag-and-drop behaviour using React state
-  - [ ] 2.3 Snap tokens to nearest hex on drop
+  - [x] 2.3 Snap tokens to nearest hex on drop
 - [ ] 3.0 Constrain token movement to board bounds
-  - [ ] 3.1 Detect board boundaries when tokens are moved
+  - [x] 3.1 Detect board boundaries when tokens are moved
   - [ ] 3.2 Prevent tokens from leaving the grid area
 - [ ] 4.0 Support multiple independent tokens
   - [ ] 4.1 Manage positions of several tokens in state

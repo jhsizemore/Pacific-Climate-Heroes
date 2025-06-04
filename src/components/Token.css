@@ -5,3 +5,7 @@
   user-select: none;
   position: absolute;
 }
+
+.token.out-of-bounds {
+  outline: 2px solid red;
+}

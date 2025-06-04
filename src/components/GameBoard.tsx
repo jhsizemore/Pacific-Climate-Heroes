@@ -8,6 +8,7 @@ import './GameBoard.css';
 const GameBoard: React.FC = () => {
   const [tokenPos, setTokenPos] = useState({ x: 100, y: 100 });
   const [dragging, setDragging] = useState(false);
+  const [outOfBounds, setOutOfBounds] = useState(false);
   const boardRef = useRef<HTMLDivElement>(null);
 
   const handleMouseDown = (e: React.MouseEvent) => {
@@ -21,9 +22,38 @@ const GameBoard: React.FC = () => {
     const x = e.clientX - rect.left - 32;
     const y = e.clientY - rect.top - 32;
     setTokenPos({ x, y });
+    setOutOfBounds(isOutsideBoard(x, y));
   };
 
-  const handleMouseUp = () => setDragging(false);
+  const isOutsideBoard = (x: number, y: number) => {
+    if (!boardRef.current) return false;
+    const rect = boardRef.current.getBoundingClientRect();
+    const size = 64;
+    return (
+      x < 0 ||
+      y < 0 ||
+      x + size > rect.width ||
+      y + size > rect.height
+    );
+  };
+
+  const snapToHex = (x: number, y: number) => {
+    const HEX_WIDTH = 60;
+    const HEX_HEIGHT = 52;
+    const OFFSET_X = 30;
+    const OFFSET_Y = 26;
+
+    const centerX = x + 32;
+    const centerY = y + 32;
+    const gridX = Math.round((centerX - OFFSET_X) / HEX_WIDTH) * HEX_WIDTH + OFFSET_X;
+    const gridY = Math.round((centerY - OFFSET_Y) / HEX_HEIGHT) * HEX_HEIGHT + OFFSET_Y;
+    return { x: gridX - 32, y: gridY - 32 };
+  };
+
+  const handleMouseUp = () => {
+    setDragging(false);
+    setTokenPos(pos => snapToHex(pos.x, pos.y));
+  };
 
   return (
     <div
@@ -36,7 +66,13 @@ const GameBoard: React.FC = () => {
       onMouseLeave={handleMouseUp}
     >
       <HexGrid />
-      <Token icon={heroIcon} x={tokenPos.x} y={tokenPos.y} onMouseDown={handleMouseDown} />
+      <Token
+        icon={heroIcon}
+        x={tokenPos.x}
+        y={tokenPos.y}
+        outOfBounds={outOfBounds}
+        onMouseDown={handleMouseDown}
+      />
     </div>
   );
 };

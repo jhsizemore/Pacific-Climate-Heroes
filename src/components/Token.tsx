@@ -6,16 +6,25 @@ export interface TokenProps {
   alt?: string;
   x: number;
   y: number;
+  outOfBounds?: boolean;
   onMouseDown?: (e: React.MouseEvent) => void;
 }
 
-const Token: React.FC<TokenProps> = ({ icon, alt = 'token', x, y, onMouseDown }) => {
+const Token: React.FC<TokenProps> = ({
+  icon,
+  alt = 'token',
+  x,
+  y,
+  outOfBounds = false,
+  onMouseDown
+}) => {
   return (
     <img
       src={icon}
       alt={alt}
-      className="token"
+      className={`token${outOfBounds ? ' out-of-bounds' : ''}`}
       data-testid="token"
+      data-out-of-bounds={outOfBounds}
       style={{ left: x, top: y }}
       onMouseDown={onMouseDown}
     />
