@@ -60,3 +60,31 @@ test('detects when token moves out of bounds', () => {
   expect(token.getAttribute('data-out-of-bounds')).toBe('true');
 });
 
+test('tokens drag independently without conflict', () => {
+  const { getByTestId } = render(<GameBoard />);
+  const board = getByTestId('game-board');
+  const token1 = getByTestId('token-1');
+  const token2 = getByTestId('token-2');
+
+  jest.spyOn(board, 'getBoundingClientRect').mockReturnValue({
+    left: 0,
+    top: 0,
+    right: 800,
+    bottom: 600,
+    width: 800,
+    height: 600,
+    x: 0,
+    y: 0,
+    toJSON: () => {}
+  });
+
+  fireEvent.mouseDown(token1);
+  fireEvent.mouseMove(board, { clientX: 180, clientY: 160 });
+  fireEvent.mouseUp(board);
+
+  const token1Left = parseInt(token1.style.left, 10);
+  const token2Left = parseInt(token2.style.left, 10);
+  expect(token2Left).toBe(200);
+  expect(token1Left).not.toBe(100);
+});
+
