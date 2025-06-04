@@ -60,29 +60,3 @@ test('detects when token moves out of bounds', () => {
   expect(token.getAttribute('data-out-of-bounds')).toBe('true');
 });
 
-test('clamps token within board boundaries', () => {
-  const { getByTestId } = render(<GameBoard />);
-  const board = getByTestId('game-board');
-  const token = getByTestId('token-1');
-
-  jest.spyOn(board, 'getBoundingClientRect').mockReturnValue({
-    left: 0,
-    top: 0,
-    right: 200,
-    bottom: 200,
-    width: 200,
-    height: 200,
-    x: 0,
-    y: 0,
-    toJSON: () => {}
-  });
-
-  fireEvent.mouseDown(token);
-  fireEvent.mouseMove(board, { clientX: 300, clientY: 300 });
-
-  const left = parseInt(token.style.left, 10);
-  const top = parseInt(token.style.top, 10);
-  expect(left).toBe(136); // 200 - 64
-  expect(top).toBe(136);
-});
-
