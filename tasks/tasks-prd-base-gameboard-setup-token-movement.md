@@ -6,6 +6,8 @@
 - `src/components/Token.tsx` - Draggable token component snapped to grid centers.
 - `src/components/GameBoard.test.tsx` - Unit tests for the GameBoard component.
 - `src/components/Token.test.tsx` - Unit tests for token drag and drop behaviour.
+- `src/App.tsx` - Root component that displays the GameBoard.
+- `src/App.test.tsx` - Unit tests ensuring the GameBoard renders inside `App`.
 
 ### Notes
 
