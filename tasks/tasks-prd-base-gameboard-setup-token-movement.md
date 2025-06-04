@@ -34,3 +34,7 @@
 - [ ] 5.0 Verify board loads correctly across browsers
   - [ ] 5.1 Add unit tests for drag-and-drop and snapping logic
   - [ ] 5.2 Test board rendering in modern browsers
+- [x] 6.0 Align board with new map image
+  - [x] 6.1 Set board dimensions to 1120x768
+  - [x] 6.2 Scale hex grid pattern from board bounds
+  - [x] 6.3 Use scaled values for snapping logic

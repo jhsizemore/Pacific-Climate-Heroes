@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import boardImage from '../../assets/img/climate-hero-board.png';
+import boardImage from '../../assets/img/board.png';
 import heroIcon from '../../assets/img/hero-icon.svg';
 import HexGrid, { HexGridProps } from './HexGrid';
 import Token from './Token';
