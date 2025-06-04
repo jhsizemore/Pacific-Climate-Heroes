@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react';
 import boardImage from '../../assets/img/climate-hero-board.png';
 import heroIcon from '../../assets/img/hero-icon.svg';
-import HexGrid from './HexGrid';
+import HexGrid, { HexGridProps } from './HexGrid';
 import Token from './Token';
 import './GameBoard.css';
 
@@ -10,6 +10,30 @@ const GameBoard: React.FC = () => {
   const [dragging, setDragging] = useState(false);
   const [outOfBounds, setOutOfBounds] = useState(false);
   const boardRef = useRef<HTMLDivElement>(null);
+
+  const BASE_GRID: HexGridProps = {
+    width: 800,
+    height: 600,
+    hexWidth: 60,
+    hexHeight: 52,
+    offsetX: 30,
+    offsetY: 26
+  };
+
+  const getGridConfig = (): HexGridProps => {
+    if (!boardRef.current) return BASE_GRID;
+    const rect = boardRef.current.getBoundingClientRect();
+    const scaleX = rect.width / BASE_GRID.width;
+    const scaleY = rect.height / BASE_GRID.height;
+    return {
+      width: rect.width,
+      height: rect.height,
+      hexWidth: BASE_GRID.hexWidth * scaleX,
+      hexHeight: BASE_GRID.hexHeight * scaleY,
+      offsetX: BASE_GRID.offsetX * scaleX,
+      offsetY: BASE_GRID.offsetY * scaleY
+    };
+  };
 
   const handleMouseDown = (e: React.MouseEvent) => {
     setDragging(true);
@@ -38,15 +62,12 @@ const GameBoard: React.FC = () => {
   };
 
   const snapToHex = (x: number, y: number) => {
-    const HEX_WIDTH = 60;
-    const HEX_HEIGHT = 52;
-    const OFFSET_X = 30;
-    const OFFSET_Y = 26;
+    const { hexWidth, hexHeight, offsetX, offsetY } = getGridConfig();
 
     const centerX = x + 32;
     const centerY = y + 32;
-    const gridX = Math.round((centerX - OFFSET_X) / HEX_WIDTH) * HEX_WIDTH + OFFSET_X;
-    const gridY = Math.round((centerY - OFFSET_Y) / HEX_HEIGHT) * HEX_HEIGHT + OFFSET_Y;
+    const gridX = Math.round((centerX - offsetX) / hexWidth) * hexWidth + offsetX;
+    const gridY = Math.round((centerY - offsetY) / hexHeight) * hexHeight + offsetY;
     return { x: gridX - 32, y: gridY - 32 };
   };
 
@@ -65,7 +86,7 @@ const GameBoard: React.FC = () => {
       onMouseUp={handleMouseUp}
       onMouseLeave={handleMouseUp}
     >
-      <HexGrid />
+      <HexGrid {...getGridConfig()} />
       <Token
         icon={heroIcon}
         x={tokenPos.x}
