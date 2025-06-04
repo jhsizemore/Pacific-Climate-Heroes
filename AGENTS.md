@@ -9,7 +9,7 @@ index 0000000000000000000000000000000000000000..fa3133aba7426d6b283241e4a4ce7ac0
 +
 +## Workflow
 +
-+1. **PRD Creation** – Use `create-prd.mdc` and ask clarifying questions before generating a Product Requirements Document.
++1. **PRD Creation** – Use `tasks/create-prd.mdc` and ask clarifying questions before generating a Product Requirements Document.
 +2. **Task Generation** – Use `tasks/generate-tasks.mdc` to turn the PRD into a high‑level task list and confirm before expanding into sub‑tasks.
 +3. **Task Execution** – Follow `tasks/process-task-list.mdc` to complete one sub‑task at a time, marking each `[x]` when finished.
 +

@@ -65,7 +65,7 @@ This project uses the [AI Dev Tasks for Cursor](https://github.com/snarktank/ai-
 
 ### Development Phases:
 
-1. **PRD Creation** – Create a detailed Product Requirement Document using `create-prd.mdc`.
+1. **PRD Creation** – Create a detailed Product Requirement Document using `tasks/create-prd.mdc`.
 2. **Task Generation** – Break the PRD into a step-by-step implementation plan using `generate-tasks-from-prd.mdc`.
 3. **Task Execution** – Guide the AI to complete tasks one-by-one with `process-task-list.mdc`.
 4. **Approval & Iteration** – Review each task’s output, provide feedback or approve.
