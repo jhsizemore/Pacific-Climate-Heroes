@@ -66,7 +66,7 @@ This project uses the [AI Dev Tasks for Cursor](https://github.com/snarktank/ai-
 ### Development Phases:
 
 1. **PRD Creation** – Create a detailed Product Requirement Document using `create-prd.mdc`.
-2. **Task Generation** – Break the PRD into a step-by-step implementation plan using `generate-tasks-from-prd.mdc`.
+2. **Task Generation** – Break the PRD into a step-by-step implementation plan using `generate-tasks.mdc`.
 3. **Task Execution** – Guide the AI to complete tasks one-by-one with `process-task-list.mdc`.
 4. **Approval & Iteration** – Review each task’s output, provide feedback or approve.
 5. **Progress Tracking** – Visually track which features are done and what’s next.
@@ -75,6 +75,10 @@ This process keeps the AI grounded, iterative, and responsive to design needs.
 *Great for fast-moving prototypes and clean code development.*
 
 Learn more at: [snarktank/ai-dev-tasks](https://github.com/snarktank/ai-dev-tasks)
+
+For convenience, this repository includes copies of the `.mdc` files in the
+`tasks/` directory so you can run the workflow locally without fetching them
+manually.
 
 ---
 
@@ -110,6 +114,10 @@ To contribute:
 3. Make your changes and commit (`git commit -m "Your message"`)
 4. Push the branch (`git push origin feature-name`)
 5. Open a Pull Request
+
+The `tasks/` folder in this repo includes command files used by the AI
+Dev Tasks workflow. Open them in Cursor to generate PRDs and step-by-step
+task lists for new features.
 
 👀 See our [Development Workflow](#️-development-workflow) for how to engage using AI Dev Tasks in Cursor.
 
